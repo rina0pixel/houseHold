@@ -65,16 +65,28 @@ npm run test:e2e         # in another — drives the real UI in headless Chromiu
    string (port `6543`, recommended for Vercel/serverless). Use the URI format
    that starts with `postgresql://`.
 
-3. **Set the `DATABASE_URL` environment variable** on the Vercel project
-   (Project Settings → Environment Variables) to that Supabase connection string.
-   It must start with `postgres://` or `postgresql://` — that's what
-   `lib/db/index.ts` checks to use the Supabase adapter instead of local SQLite.
-   (`SUPABASE_DB_URL` is also accepted as an alias.)
+3. **Set environment variables** on the Vercel project (Project Settings →
+   Environment Variables):
 
-4. **Deploy.** The database schema is created automatically on first use
-   (see `lib/db/schema.ts` — plain `CREATE TABLE IF NOT EXISTS` statements,
-   no migration tool required). No separate migration step needed for this
-   schema's current shape.
+   | Variable | Value |
+   |----------|--------|
+   | `DATABASE_URL` | Supabase **Transaction pooler** URI (port `6543`) — for API queries |
+   | `DATABASE_DIRECT_URL` | *(optional but recommended)* Supabase **Direct** URI (port `5432`) — for creating tables |
+
+   If you use Vercel's Supabase integration, it may set `POSTGRES_URL` and
+   `POSTGRES_URL_NON_POOLING` instead — those work too.
+
+   **Why two URLs?** Supabase's transaction pooler (6543) is great for Vercel
+   serverless queries, but it cannot run `CREATE TABLE`. The app auto-falls
+   back to session pooler (5432 on the same host) when `DATABASE_DIRECT_URL`
+   is not set; setting the direct URL is more reliable.
+
+4. **Deploy**, then open `https://your-app.vercel.app/api/health` — you should
+   see `{"ok":true}`. That endpoint runs the schema migration. Tables appear
+   under Supabase → **Table Editor** (schema `public`).
+
+   If health fails or tables are still missing, paste `scripts/supabase-schema.sql`
+   into Supabase → **SQL Editor** and run it once manually.
 
 5. Once deployed, visiting the site's root URL shows the "create a
    household" screen. After creating one, share that household's `/h/...`
@@ -83,11 +95,14 @@ npm run test:e2e         # in another — drives the real UI in headless Chromiu
 
 ### Environment variables
 
-| Variable          | Required in production | Notes                                                                 |
-|-------------------|:----------------------:|-----------------------------------------------------------------------|
-| `DATABASE_URL`    | Yes                    | Supabase Postgres connection string (Transaction pooler recommended). |
-| `SUPABASE_DB_URL` | No                     | Alias for `DATABASE_URL` if you prefer a Supabase-specific name.      |
-| `SQLITE_PATH`     | No                     | Overrides the local SQLite file path (default `.data/dev.db`).          |
+| Variable                    | Required in production | Notes                                                                 |
+|-----------------------------|:----------------------:|-----------------------------------------------------------------------|
+| `DATABASE_URL`              | Yes                    | Transaction pooler URI (port 6543) for runtime API queries.           |
+| `DATABASE_DIRECT_URL`       | Recommended            | Direct URI (port 5432) for creating tables. Auto-fallback if omitted. |
+| `POSTGRES_URL`              | —                      | Vercel Supabase integration alias for `DATABASE_URL`.                 |
+| `POSTGRES_URL_NON_POOLING`  | —                      | Vercel Supabase integration alias for `DATABASE_DIRECT_URL`.          |
+| `SUPABASE_DB_URL`           | No                     | Alias for `DATABASE_URL`.                                             |
+| `SQLITE_PATH`               | No                     | Local dev only — overrides SQLite file path (default `.data/dev.db`).   |
 
 ## Why no Prisma?
 

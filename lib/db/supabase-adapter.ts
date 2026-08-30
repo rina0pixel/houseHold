@@ -1,39 +1,24 @@
 import postgres from "postgres";
 import { SCHEMA_STATEMENTS } from "./schema";
 import type { DbAdapter } from "./types";
+import {
+  getMigrationDatabaseUrl,
+  getRuntimeDatabaseUrl,
+  usesTransactionPooler,
+} from "./supabase-urls";
 
 // Production (Vercel + Supabase). Uses the pure-JS `postgres` client against
 // Supabase's Postgres — no native binary, no @supabase/supabase-js needed for
-// this app's raw-SQL repository layer. Set DATABASE_URL to the Supabase
-// connection string from Project Settings → Database (prefer the Transaction
-// pooler URI on port 6543 for serverless).
+// this app's raw-SQL repository layer.
 let sqlClient: ReturnType<typeof postgres> | null = null;
 let schemaReady: Promise<void> | null = null;
 
-function getDatabaseUrl(): string {
-  const url = process.env.DATABASE_URL || process.env.SUPABASE_DB_URL;
-  if (!url) {
-    throw new Error("DATABASE_URL (or SUPABASE_DB_URL) is not set");
-  }
-  return url;
-}
-
-function usesPooler(url: string): boolean {
-  return (
-    url.includes("pooler.supabase.com") ||
-    url.includes("pgbouncer=true") ||
-    url.includes(":6543/")
-  );
-}
-
 function getSql() {
   if (!sqlClient) {
-    const url = getDatabaseUrl();
+    const url = getRuntimeDatabaseUrl();
     sqlClient = postgres(url, {
       ssl: "require",
-      // Supabase's transaction pooler (PgBouncer) does not support prepared
-      // statements — required for Vercel/serverless deployments.
-      prepare: !usesPooler(url),
+      prepare: !usesTransactionPooler(url),
     });
   }
   return sqlClient;
@@ -48,15 +33,31 @@ function toPositional(query: string): string {
 }
 
 async function ensureSchema(): Promise<void> {
-  if (!schemaReady) {
-    schemaReady = (async () => {
-      const sql = getSql();
+  if (schemaReady) return schemaReady;
+
+  schemaReady = (async () => {
+    const migrationUrl = getMigrationDatabaseUrl();
+    const migrationSql = postgres(migrationUrl, {
+      ssl: "require",
+      max: 1,
+      prepare: !usesTransactionPooler(migrationUrl),
+    });
+    try {
       for (const stmt of SCHEMA_STATEMENTS) {
-        await sql.unsafe(stmt);
+        await migrationSql.unsafe(stmt);
       }
-    })();
+    } finally {
+      await migrationSql.end({ timeout: 5 });
+    }
+  })();
+
+  try {
+    await schemaReady;
+  } catch (err) {
+    schemaReady = null;
+    console.error("[db] schema migration failed:", err);
+    throw err;
   }
-  return schemaReady;
 }
 
 export const supabaseAdapter: DbAdapter = {
