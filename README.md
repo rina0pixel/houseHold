@@ -65,21 +65,14 @@ npm run test:e2e         # in another — drives the real UI in headless Chromiu
    string (port `6543`, recommended for Vercel/serverless). Use the URI format
    that starts with `postgresql://`.
 
-3. **Set environment variables** on the Vercel project (Project Settings →
-   Environment Variables):
+3. **Set `DATABASE_URL`** on the Vercel project (Project Settings →
+   Environment Variables) to the **Transaction pooler** URI (port `6543`).
+   That is the only required variable.
 
-   | Variable | Value |
-   |----------|--------|
-   | `DATABASE_URL` | Supabase **Transaction pooler** URI (port `6543`) — for API queries |
-   | `DATABASE_DIRECT_URL` | *(optional but recommended)* Supabase **Direct** URI (port `5432`) — for creating tables |
-
-   If you use Vercel's Supabase integration, it may set `POSTGRES_URL` and
-   `POSTGRES_URL_NON_POOLING` instead — those work too.
-
-   **Why two URLs?** Supabase's transaction pooler (6543) is great for Vercel
-   serverless queries, but it cannot run `CREATE TABLE`. The app auto-falls
-   back to session pooler (5432 on the same host) when `DATABASE_DIRECT_URL`
-   is not set; setting the direct URL is more reliable.
+   Do **not** set `DATABASE_DIRECT_URL` to the **Direct** host
+   (`db.<ref>.supabase.co`). On the free plan that host is IPv6-only and
+   Vercel cannot resolve it (`ENOTFOUND`). The app creates tables through
+   the session pooler instead (same pooler host, port `5432`).
 
 4. **Deploy**, then open `https://your-app.vercel.app/api/health` — you should
    see `{"ok":true}`. That endpoint runs the schema migration. Tables appear
@@ -97,10 +90,8 @@ npm run test:e2e         # in another — drives the real UI in headless Chromiu
 
 | Variable                    | Required in production | Notes                                                                 |
 |-----------------------------|:----------------------:|-----------------------------------------------------------------------|
-| `DATABASE_URL`              | Yes                    | Transaction pooler URI (port 6543) for runtime API queries.           |
-| `DATABASE_DIRECT_URL`       | Recommended            | Direct URI (port 5432) for creating tables. Auto-fallback if omitted. |
+| `DATABASE_URL`              | Yes                    | Transaction pooler URI (port 6543). Do not use `db.<ref>.supabase.co`. |
 | `POSTGRES_URL`              | —                      | Vercel Supabase integration alias for `DATABASE_URL`.                 |
-| `POSTGRES_URL_NON_POOLING`  | —                      | Vercel Supabase integration alias for `DATABASE_DIRECT_URL`.          |
 | `SUPABASE_DB_URL`           | No                     | Alias for `DATABASE_URL`.                                             |
 | `SQLITE_PATH`               | No                     | Local dev only — overrides SQLite file path (default `.data/dev.db`).   |
 

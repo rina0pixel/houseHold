@@ -13,24 +13,34 @@ export function getRuntimeDatabaseUrl(): string {
   return url;
 }
 
+/** Free-plan direct hosts (`db.<ref>.supabase.co`) are IPv6-only — Vercel cannot resolve them. */
+function isIpv6OnlySupabaseHost(url: string): boolean {
+  return /@db\.[a-z0-9]+\.supabase\.co(?::|\/)/i.test(url);
+}
+
+function toSessionPoolerUrl(url: string): string {
+  return url.includes(":6543") ? url.replace(":6543", ":5432") : url;
+}
+
 /**
  * Schema DDL (CREATE TABLE) must not run through Supabase's transaction
- * pooler (port 6543). Prefer a direct URL; otherwise fall back to session
- * pooler (same host, port 5432).
+ * pooler (port 6543). Use the session pooler (same host, port 5432).
+ *
+ * Do not use `db.<ref>.supabase.co` from Vercel — that host is IPv6-only
+ * on the free plan and fails with ENOTFOUND.
  */
 export function getMigrationDatabaseUrl(): string {
-  const direct =
+  const explicit =
     process.env.DATABASE_DIRECT_URL ||
     process.env.DIRECT_URL ||
     process.env.POSTGRES_URL_NON_POOLING ||
     process.env.SUPABASE_DB_DIRECT_URL;
-  if (direct) return direct;
 
-  const runtime = getRuntimeDatabaseUrl();
-  if (runtime.includes(":6543")) {
-    return runtime.replace(":6543", ":5432");
+  if (explicit && !isIpv6OnlySupabaseHost(explicit)) {
+    return explicit;
   }
-  return runtime;
+
+  return toSessionPoolerUrl(getRuntimeDatabaseUrl());
 }
 
 export function usesTransactionPooler(url: string): boolean {
