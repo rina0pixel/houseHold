@@ -1,5 +1,15 @@
--- Run once in Supabase → SQL Editor if tables were not created automatically.
--- Safe to re-run (IF NOT EXISTS on every object).
+-- Household Notebook schema for Supabase (Postgres).
+-- Paste into Supabase → SQL Editor and click Run.
+-- Safe to re-run: every statement uses IF NOT EXISTS.
+
+-- If your project already has the original tables, this is the only new
+-- object. Running the rest of the file is still safe.
+CREATE TABLE IF NOT EXISTS daily_limits (
+  household_id TEXT NOT NULL,
+  date TEXT NOT NULL,
+  amount REAL NOT NULL,
+  PRIMARY KEY (household_id, date)
+);
 
 CREATE TABLE IF NOT EXISTS households (
   id TEXT PRIMARY KEY,

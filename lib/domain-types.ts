@@ -71,3 +71,10 @@ export interface Target {
   month: string;
   amount: number;
 }
+
+/** Same shape as Target, but scoped to a single day instead of a month. */
+export interface DailyLimit {
+  householdId: string;
+  date: string;
+  amount: number;
+}

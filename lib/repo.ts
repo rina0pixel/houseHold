@@ -9,6 +9,7 @@ import type {
   CustomBank,
   CustomWallet,
   Target,
+  DailyLimit,
   Role,
 } from "./domain-types";
 
@@ -321,6 +322,29 @@ export async function setTarget(householdId: string, month: string, amount: numb
     await db.run("INSERT INTO targets (household_id, month, amount) VALUES (?, ?, ?)", [householdId, month, amount]);
   }
   return { householdId, month, amount };
+}
+
+/* ------------------------------------------------------------ daily limit
+   Same shape and same persistence pattern as target, above, just keyed by a
+   calendar date instead of a month — see the daily_limits table. */
+
+export async function getDailyLimit(householdId: string, date: string): Promise<DailyLimit | null> {
+  const rows = await getAdapter().query<{ household_id: string; date: string; amount: number }>(
+    "SELECT * FROM daily_limits WHERE household_id = ? AND date = ?",
+    [householdId, date]
+  );
+  return rows[0] ? { householdId: rows[0].household_id, date: rows[0].date, amount: rows[0].amount } : null;
+}
+
+export async function setDailyLimit(householdId: string, date: string, amount: number): Promise<DailyLimit> {
+  const db = getAdapter();
+  const existing = await getDailyLimit(householdId, date);
+  if (existing) {
+    await db.run("UPDATE daily_limits SET amount = ? WHERE household_id = ? AND date = ?", [amount, householdId, date]);
+  } else {
+    await db.run("INSERT INTO daily_limits (household_id, date, amount) VALUES (?, ?, ?)", [householdId, date, amount]);
+  }
+  return { householdId, date, amount };
 }
 
 /* ------------------------------------------------------------- sessions */

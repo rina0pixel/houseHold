@@ -72,6 +72,13 @@ export const SCHEMA_STATEMENTS: string[] = [
     PRIMARY KEY (household_id, month)
   )`,
 
+  `CREATE TABLE IF NOT EXISTS daily_limits (
+    household_id TEXT NOT NULL,
+    date TEXT NOT NULL,
+    amount REAL NOT NULL,
+    PRIMARY KEY (household_id, date)
+  )`,
+
   `CREATE TABLE IF NOT EXISTS sessions (
     id TEXT PRIMARY KEY,
     household_id TEXT NOT NULL,

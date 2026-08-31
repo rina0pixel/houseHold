@@ -62,7 +62,8 @@ var ICON_PATHS = {
   book: '<path d="M4 5.3c2.4-1 5.2-1 8 0v13.4c-2.8-1-5.6-1-8 0z"/><path d="M20 5.3c-2.4-1-5.2-1-8 0v13.4c2.8-1 5.6-1 8 0z"/>',
   phone: '<rect x="7.2" y="3" width="9.6" height="18" rx="2.2"/><path d="M10.8 18.2h2.4"/>',
   coffee: '<path d="M5 9h11v6.2a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10.5h1.6a2.4 2.4 0 0 1 0 4.7H16"/><path d="M7.8 6.2c0-1 .9-1 .9-2M11.6 6.2c0-1 .9-1 .9-2"/>',
-  heart: '<path d="M12 20s-7.3-4.4-9.4-8.9C1.3 8 2.8 4.6 6 4c2.4-.5 4.5.8 6 3.3C13.5 4.8 15.6 3.5 18 4c3.2.6 4.7 4 3.4 7.1C19.3 15.6 12 20 12 20z"/>'
+  heart: '<path d="M12 20s-7.3-4.4-9.4-8.9C1.3 8 2.8 4.6 6 4c2.4-.5 4.5.8 6 3.3C13.5 4.8 15.6 3.5 18 4c3.2.6 4.7 4 3.4 7.1C19.3 15.6 12 20 12 20z"/>',
+  coins: '<ellipse cx="12" cy="17" rx="6.5" ry="2.4"/><ellipse cx="12" cy="13" rx="6.5" ry="2.4"/><ellipse cx="12" cy="9" rx="6.5" ry="2.4"/><path d="M5.5 9v8M18.5 9v8"/>'
 };
 
 // Curated icon set offered when creating a custom category — a mix of the
@@ -189,6 +190,11 @@ var I18N = {
     "setup.createHousehold": "Create household",
     "setup.creating": "Setting up…",
     "setup.alreadyHave": "Already have a household? Ask its owner for the household link, and open it on this device.",
+    "setup.login": "Log in to an existing household",
+    "setup.loginLinkLabel": "Household link or ID",
+    "setup.loginLinkPlaceholder": "Paste the link your household owner shared",
+    "setup.loginContinue": "Continue",
+    "setup.loginErr": "Enter a valid household link or ID.",
     "setup.showPasscode": "Show passcode",
     "setup.hidePasscode": "Hide passcode",
     "setup.err.hhName": "Enter a name for your household.",
@@ -237,6 +243,33 @@ var I18N = {
     "target.err.amount": "Enter an amount greater than zero.",
     "target.err.save": "Couldn't save right now. Check your connection and try again.",
     "toast.targetUpdated": "Monthly target updated",
+
+    "dailyLimit.setTitle": "Set a daily spending limit",
+    "dailyLimit.setDesc": "Set a daily spending limit to keep a closer eye on today's spending, ahead of the monthly target.",
+    "dailyLimit.setBtn": "Set daily limit",
+    "dailyLimit.title": "Daily spending limit",
+    "dailyLimit.editBtn": "Edit limit",
+    "dailyLimit.status.ok": "On track",
+    "dailyLimit.status.warn": "Getting close",
+    "dailyLimit.status.alert": "Almost reached",
+    "dailyLimit.status.danger": "Limit reached",
+    "dailyLimit.spentOf": "You have spent {spent} of your {amount} daily limit.",
+    "dailyLimit.remaining": "Remaining today",
+    "dailyLimit.overBy": "Over by {amount}",
+    "dailyLimit.percentUsed": "Percentage used",
+    "dailyLimit.day": "Day",
+    "dailyLimit.dailyLimit": "Daily limit",
+    "dailyLimit.pageTitle": "Daily spending limit",
+    "dailyLimit.pageQuestion": "How much would your household like to spend per day?",
+    "dailyLimit.pageInfo": "This limit takes priority over the monthly target — it helps your household catch overspending day by day. It does not prevent anyone from adding an expense.",
+    "dailyLimit.amountLabel": "Daily spending limit",
+    "dailyLimit.currencyLabel": "Household currency",
+    "dailyLimit.saveBtn": "Save limit",
+    "dailyLimit.saving": "Saving…",
+    "dailyLimit.ownerOnlyInfo": "Only your household owner can change the daily limit. You can still see it here any time.",
+    "dailyLimit.err.amount": "Enter an amount greater than zero.",
+    "dailyLimit.err.save": "Couldn't save right now. Check your connection and try again.",
+    "toast.dailyLimitUpdated": "Daily limit updated",
     "toast.readOnlyGeneric": "This household is read-only for you right now.",
 
     "summary.title": "Expense summary",
@@ -266,6 +299,7 @@ var I18N = {
     "period.year": "year",
 
     "home.recentExpenses": "Recent expenses",
+    "home.yourSpending": "Your Spending",
     "home.viewAllExpenses": "View all expenses",
     "home.noneTitle": "No expenses have been added yet.",
     "home.noneDesc": "Add the first expense to start tracking your household spending.",
@@ -389,6 +423,7 @@ var I18N = {
     "household.infoOwner": "Everyone in your household can add expenses and view shared spending. As the owner, you can also set the monthly target and manage members.",
     "household.infoMember": "Everyone in your household can add expenses and view shared spending. Only your household owner can change the monthly target or manage members.",
     "household.viewOrEditTarget": "View or edit target",
+    "household.viewOrEditDailyLimit": "View or edit daily limit",
     "household.notSet": "Not set",
     "household.removeTitle": "Remove {name}?",
     "household.removeMessage": "{name} will no longer be able to log in to this household. Expenses they already added will stay in the shared history.",
@@ -532,6 +567,11 @@ var I18N = {
     "setup.createHousehold": "အိမ်ထောင်စု ဖန်တီးရန်",
     "setup.creating": "တည်ဆောက်နေသည်…",
     "setup.alreadyHave": "အိမ်ထောင်စု ရှိပြီးသားလား။ ၎င်း၏ပိုင်ရှင်ထံမှ လင့်ခ်ကို တောင်းယူပြီး ဤစက်ပစ္စည်းတွင် ဖွင့်ပါ။",
+    "setup.login": "အိမ်ထောင်စု ရှိပြီးသားထဲသို့ လော့ဂ်အင်ဝင်ရန်",
+    "setup.loginLinkLabel": "အိမ်ထောင်စု လင့်ခ် (သို့) ID",
+    "setup.loginLinkPlaceholder": "သင့်အိမ်ထောင်စု ပိုင်ရှင်က မျှဝေထားသော လင့်ခ်ကို ကူးထည့်ပါ",
+    "setup.loginContinue": "ဆက်လက်လုပ်ဆောင်ရန်",
+    "setup.loginErr": "မှန်ကန်သော အိမ်ထောင်စု လင့်ခ် (သို့) ID ကို ထည့်ပါ။",
     "setup.showPasscode": "စကားဝှက် ပြရန်",
     "setup.hidePasscode": "စကားဝှက် ဖျောက်ရန်",
     "setup.err.hhName": "သင့်အိမ်ထောင်စုအတွက် အမည်တစ်ခု ရိုက်ထည့်ပါ။",
@@ -580,6 +620,33 @@ var I18N = {
     "target.err.amount": "သုညထက် ကြီးသော ပမာဏတစ်ခု ရိုက်ထည့်ပါ။",
     "target.err.save": "လောလောဆယ် သိမ်း၍မရပါ။ သင့်အင်တာနက်ကို စစ်ဆေးပြီး ထပ်စမ်းကြည့်ပါ။",
     "toast.targetUpdated": "လစဉ်ပန်းတိုင် မွမ်းမံပြီးပါပြီ",
+
+    "dailyLimit.setTitle": "နေ့စဉ်အသုံးစရိတ် ကန့်သတ်ချက် သတ်မှတ်ပါ",
+    "dailyLimit.setDesc": "လစဉ်ပန်းတိုင်ထက် ဦးစားပေးအနေဖြင့် ယနေ့၏ အသုံးစရိတ်ကို ပိုမိုနီးကပ်စွာ စောင့်ကြည့်နိုင်ရန် နေ့စဉ် ကန့်သတ်ချက်တစ်ခု သတ်မှတ်ပါ။",
+    "dailyLimit.setBtn": "နေ့စဉ်ကန့်သတ်ချက် သတ်မှတ်ရန်",
+    "dailyLimit.title": "နေ့စဉ်အသုံးစရိတ် ကန့်သတ်ချက်",
+    "dailyLimit.editBtn": "ကန့်သတ်ချက် ပြင်ဆင်ရန်",
+    "dailyLimit.status.ok": "ပုံမှန်အတိုင်း",
+    "dailyLimit.status.warn": "နီးကပ်လာသည်",
+    "dailyLimit.status.alert": "ကျော်တော့မည်",
+    "dailyLimit.status.danger": "ကန့်သတ်ချက်သို့ ရောက်ပြီ",
+    "dailyLimit.spentOf": "သင့်နေ့စဉ်ကန့်သတ်ချက် {amount} အနက် {spent} သုံးစွဲပြီးပါပြီ။",
+    "dailyLimit.remaining": "ယနေ့ ကျန်ရှိငွေ",
+    "dailyLimit.overBy": "{amount} ကျော်လွန်",
+    "dailyLimit.percentUsed": "သုံးစွဲပြီး ရာခိုင်နှုန်း",
+    "dailyLimit.day": "နေ့",
+    "dailyLimit.dailyLimit": "နေ့စဉ်ကန့်သတ်ချက်",
+    "dailyLimit.pageTitle": "နေ့စဉ်အသုံးစရိတ် ကန့်သတ်ချက်",
+    "dailyLimit.pageQuestion": "တစ်နေ့လျှင် သင့်အိမ်ထောင်စု ဘယ်လောက်သုံးချင်ပါသလဲ။",
+    "dailyLimit.pageInfo": "ဤကန့်သတ်ချက်သည် လစဉ်ပန်းတိုင်ထက် ဦးစားပေးရသည် — သင့်အိမ်ထောင်စုအား နေ့စဉ် အလွန်အကျွံ သုံးစွဲမှုကို လျင်မြန်စွာ သတိပြုနိုင်ရန် ကူညီပေးပါသည်။ မည်သူ့ကိုမျှ အသုံးစရိတ်ထည့်ခြင်းမှ တားမြစ်မထားပါ။",
+    "dailyLimit.amountLabel": "နေ့စဉ်အသုံးစရိတ် ကန့်သတ်ချက်",
+    "dailyLimit.currencyLabel": "အိမ်ထောင်စု ငွေကြေး",
+    "dailyLimit.saveBtn": "ကန့်သတ်ချက် သိမ်းရန်",
+    "dailyLimit.saving": "သိမ်းနေသည်…",
+    "dailyLimit.ownerOnlyInfo": "သင့်အိမ်ထောင်စု ပိုင်ရှင်သာ နေ့စဉ်ကန့်သတ်ချက်ကို ပြောင်းလဲနိုင်ပါသည်။ ၎င်းကို ဤနေရာတွင် အချိန်မရွေး ကြည့်ရှုနိုင်ပါသည်။",
+    "dailyLimit.err.amount": "သုညထက် ကြီးသော ပမာဏတစ်ခု ရိုက်ထည့်ပါ။",
+    "dailyLimit.err.save": "လောလောဆယ် သိမ်း၍မရပါ။ သင့်အင်တာနက်ကို စစ်ဆေးပြီး ထပ်စမ်းကြည့်ပါ။",
+    "toast.dailyLimitUpdated": "နေ့စဉ်ကန့်သတ်ချက် မွမ်းမံပြီးပါပြီ",
     "toast.readOnlyGeneric": "လောလောဆယ် ဤအိမ်ထောင်စုကို ကြည့်ရှုခွင့်သာ ရနေပါသည်။",
 
     "summary.title": "အသုံးစရိတ် အနှစ်ချုပ်",
@@ -609,6 +676,7 @@ var I18N = {
     "period.year": "နှစ်",
 
     "home.recentExpenses": "လတ်တလော အသုံးစရိတ်များ",
+    "home.yourSpending": "သင့်အသုံးစရိတ်များ",
     "home.viewAllExpenses": "အသုံးစရိတ်အားလုံး ကြည့်ရန်",
     "home.noneTitle": "အသုံးစရိတ် မထည့်သွင်းရသေးပါ။",
     "home.noneDesc": "သင့်အိမ်ထောင်စု အသုံးစရိတ်ကို စတင်မှတ်တမ်းတင်ရန် ပထမဆုံးအသုံးစရိတ်ကို ထည့်ပါ။",
@@ -732,6 +800,7 @@ var I18N = {
     "household.infoOwner": "သင့်အိမ်ထောင်စုရှိ လူတိုင်းသည် အသုံးစရိတ်ထည့်ခြင်းနှင့် မျှဝေထားသော အသုံးစရိတ်များကို ကြည့်ရှုနိုင်ပါသည်။ ပိုင်ရှင်အနေဖြင့် သင်သည် လစဉ်ပန်းတိုင်ကို သတ်မှတ်ခြင်းနှင့် အဖွဲ့ဝင်များကို စီမံခန့်ခွဲခြင်းကိုလည်း ပြုလုပ်နိုင်ပါသည်။",
     "household.infoMember": "သင့်အိမ်ထောင်စုရှိ လူတိုင်းသည် အသုံးစရိတ်ထည့်ခြင်းနှင့် မျှဝေထားသော အသုံးစရိတ်များကို ကြည့်ရှုနိုင်ပါသည်။ အိမ်ထောင်စုပိုင်ရှင်သာ လစဉ်ပန်းတိုင်ကို ပြောင်းလဲခြင်း (သို့) အဖွဲ့ဝင်များကို စီမံနိုင်ပါသည်။",
     "household.viewOrEditTarget": "ပန်းတိုင် ကြည့်ရန် (သို့) ပြင်ဆင်ရန်",
+    "household.viewOrEditDailyLimit": "နေ့စဉ်ကန့်သတ်ချက် ကြည့်ရန် (သို့) ပြင်ဆင်ရန်",
     "household.notSet": "မသတ်မှတ်ရသေးပါ",
     "household.removeTitle": "{name} ကို ဖယ်ရှားမလား။",
     "household.removeMessage": "{name} သည် ဤအိမ်ထောင်စုသို့ နောက်ထပ် လော့ဂ်အင်ဝင်နိုင်တော့မည် မဟုတ်ပါ။ ၎င်းတို့ ထည့်ထားပြီးသား အသုံးစရိတ်များမူ မျှဝေမှတ်တမ်းတွင် ဆက်ရှိနေပါမည်။",
@@ -1128,6 +1197,7 @@ function defaultState() {
     household: null, // { id, name, currency, createdAt }
     members: [],      // { id, name, initials, role } — pin never sent to the client
     target: null,      // { amount, month }
+    dailyLimit: null,  // { amount, date } — same shape as target, but scoped to a day instead of a month
     expenses: [],        // { id, categoryId, detail, amount, paymentMethod, memberId, date, createdAt, updatedAt, editedBy, editedAt, receiptDataUrls }
     customCategories: [],  // { id, label, icon } — created by members from the Add/Edit Expense category picker
     customBanks: [],       // { id, name, initials, color }
@@ -1331,11 +1401,26 @@ function monthTotalSpent(monthKey) {
     return monthKeyOf(e.date) === monthKey ? sum + (Number(e.amount) || 0) : sum;
   }, 0);
 }
+function dayTotalSpent(dateISO) {
+  return state.expenses.reduce(function (sum, e) {
+    return e.date === dateISO ? sum + (Number(e.amount) || 0) : sum;
+  }, 0);
+}
 function targetStatus(pct) {
   if (pct >= 100) return { key: 'danger', label: t('target.status.danger') };
   if (pct >= 90) return { key: 'alert', label: t('target.status.alert') };
   if (pct >= 70) return { key: 'warn', label: t('target.status.warn') };
   return { key: 'ok', label: t('target.status.ok') };
+}
+// Same thresholds as targetStatus, but the daily limit is the higher-priority
+// figure (checked and shown first — see renderHomeScreen), so it gets its
+// own label set ("Limit reached" etc.) rather than reusing the monthly
+// target's wording.
+function dailyLimitStatus(pct) {
+  if (pct >= 100) return { key: 'danger', label: t('dailyLimit.status.danger') };
+  if (pct >= 90) return { key: 'alert', label: t('dailyLimit.status.alert') };
+  if (pct >= 70) return { key: 'warn', label: t('dailyLimit.status.warn') };
+  return { key: 'ok', label: t('dailyLimit.status.ok') };
 }
 function recentExpenses(n) {
   return state.expenses.slice().sort(function (a, b) {
@@ -1452,9 +1537,9 @@ function closeDrawer() {
    ============================================================ */
 var NAV_ITEMS = [
   { name: 'home', key: 'nav.home', icon: 'home' },
-  { name: 'all-expenses', key: 'nav.expenses', icon: 'list' },
+  { name: 'all-expenses', key: 'nav.expenses', icon: 'coins' },
   { name: 'add-expense', key: 'nav.addExpense', icon: 'plus', isAdd: true },
-  { name: 'household', key: 'nav.household', icon: 'household' },
+  { name: 'household', key: 'nav.household', icon: 'people' },
   { name: 'settings', key: 'nav.settings', icon: 'sliders' }
 ];
 function renderSideNav(activeName) {
@@ -1541,8 +1626,13 @@ function bindShellEvents(root) {
   if (drawerBtn) drawerBtn.addEventListener('click', openDrawer);
   var avatarBtn = root.querySelector('[data-action="open-drawer-avatar"]');
   if (avatarBtn) avatarBtn.addEventListener('click', openDrawer);
-  var logoutBtn = root.querySelector('[data-action="logout"]');
-  if (logoutBtn) logoutBtn.addEventListener('click', doLogout);
+  // There can be more than one logout control in the DOM at once (the
+  // desktop sidenav's, hidden on mobile via CSS, and the one in the
+  // Settings page body) — wire up every one of them, not just whichever
+  // happens to come first in DOM order.
+  root.querySelectorAll('[data-action="logout"]').forEach(function (logoutBtn) {
+    logoutBtn.addEventListener('click', doLogout);
+  });
 }
 var onScreenBack = function () { navigate('home'); };
 
@@ -1555,6 +1645,7 @@ function doLogout() {
   session.memberId = null;
   state.expenses = [];
   state.target = null;
+  state.dailyLimit = null;
   state.customCategories = [];
   state.customBanks = [];
   state.customWallets = [];
@@ -1615,6 +1706,7 @@ function renderApp() {
     case 'all-expenses': renderAllExpensesScreen(root); return;
     case 'expense-detail': renderExpenseDetailScreen(root, route.params.id); return;
     case 'set-target': renderSetTargetScreen(root); return;
+    case 'set-daily-limit': renderSetDailyLimitScreen(root); return;
     case 'household': renderHouseholdScreen(root); return;
     case 'settings': renderSettingsScreen(root); return;
     case 'invite': renderInviteScreen(root); return;
@@ -1657,6 +1749,8 @@ function renderSetupScreen() {
         '<div id="setup-error" aria-live="polite"></div>' +
         '<button type="submit" class="btn btn-primary btn-block">' + escapeHtml(t('setup.createHousehold')) + '</button>' +
       '</form>' +
+      '<button type="button" class="btn btn-secondary btn-block" data-action="setup-login">' + escapeHtml(t('setup.login')) + '</button>' +
+      '<div id="setup-login-panel"></div>' +
       '<p class="muted" style="text-align:center;">' + escapeHtml(t('setup.alreadyHave')) + '</p>' +
     '</div>' +
   '</div>';
@@ -1664,6 +1758,44 @@ function renderSetupScreen() {
 function bindSetupScreen(root) {
   var form = root.querySelector('#setup-form');
   var pinInput = root.querySelector('#owner-pin');
+  // "Log in to an existing household" — deliberately does NOT create a
+  // household. Unlike the original single-tenant artifact (where every
+  // household lived in one document, so "log in" could just re-check local
+  // state for one already there), this app is multi-tenant: every household
+  // has its own permanent URL (/h/<id>), and the bare "/" screen has no way
+  // to know which one a returning member means. So instead of a no-op nav,
+  // this reveals a small field for the household's link or id (the same
+  // string the Invite screen hands out) and sends the browser straight to
+  // that household's own login screen — no new household is ever created.
+  root.querySelector('[data-action="setup-login"]').addEventListener('click', function () {
+    var panel = root.querySelector('#setup-login-panel');
+    if (panel.innerHTML) { panel.innerHTML = ''; return; }
+    panel.innerHTML =
+      '<form id="setup-login-form" class="card stack" novalidate style="margin-top:4px;">' +
+        '<label class="field-label" for="setup-login-input">' + escapeHtml(t('setup.loginLinkLabel')) + '</label>' +
+        '<input class="text-input" id="setup-login-input" type="text" placeholder="' + escapeHtml(t('setup.loginLinkPlaceholder')) + '" autocomplete="off" />' +
+        '<div id="setup-login-error"></div>' +
+        '<button type="submit" class="btn btn-primary btn-block">' + escapeHtml(t('setup.loginContinue')) + '</button>' +
+      '</form>';
+    var loginInput = panel.querySelector('#setup-login-input');
+    loginInput.focus();
+    panel.querySelector('#setup-login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var raw = loginInput.value.trim();
+      var errBox = panel.querySelector('#setup-login-error');
+      errBox.innerHTML = '';
+      // Accept either a full invite link (.../h/<id>) or a bare household id.
+      var match = raw.match(/\/h\/([^/?#]+)/);
+      var id = match ? match[1] : raw.replace(/\/+$/, '').split('/').pop();
+      if (!id) {
+        errBox.innerHTML = '<span class="field-error">' + icon('warning') + '<span>' + escapeHtml(t('setup.loginErr')) + '</span></span>';
+        loginInput.classList.add('has-error');
+        loginInput.focus();
+        return;
+      }
+      window.location.href = '/h/' + id;
+    });
+  });
   root.querySelector('[data-action="toggle-pin"]').addEventListener('click', function (e) {
     var btn = e.currentTarget;
     var showing = btn.getAttribute('aria-pressed') === 'true';
@@ -1731,9 +1863,12 @@ function renderLoginScreen() {
     '<div class="stack-lg">' +
       '<div class="stack" style="align-items:center; text-align:center; padding-top:24px;">' +
         '<span class="avatar" style="width:64px;height:64px;font-size:1.5rem;" aria-hidden="true">HN</span>' +
-        '<h1 class="display-md">' + escapeHtml(state.household.name) + '</h1>' +
-        '<p class="muted body-lg">' + escapeHtml(t('login.whoAdding')) + '</p>' +
       '</div>' +
+      '<div class="field">' +
+        '<label class="field-label" for="login-hh-name">' + escapeHtml(t('setup.householdNameLabel')) + '</label>' +
+        '<input class="text-input" id="login-hh-name" type="text" value="' + escapeHtml(state.household.name) + '" disabled />' +
+      '</div>' +
+      '<p class="muted body-lg" style="text-align:center;">' + escapeHtml(t('login.whoAdding')) + '</p>' +
       '<div class="card stack" id="member-list">' +
         members.map(function (m, i) {
           return '<button type="button" class="choice-btn choice-btn-wide" style="width:100%" data-member="' + m.id + '">' +
@@ -1816,6 +1951,39 @@ function bindLoginScreen(root) {
    ============================================================ */
 var homeUi = { period: 'weekly', weekMonthKey: currentMonthKey(), weekIndex: weekIndexForDate(todayISO()), monthYear: new Date().getFullYear(), monthIndex: new Date().getMonth(), year: new Date().getFullYear() };
 
+function renderDailyLimitCard() {
+  var today = todayISO();
+  var spent = dayTotalSpent(today);
+  if (!state.dailyLimit || state.dailyLimit.date !== today) {
+    return '<div class="card target-card daily-limit-card">' +
+      '<h2 class="title">' + icon('target', 'faint') + ' ' + escapeHtml(t('dailyLimit.setTitle')) + '</h2>' +
+      '<p class="muted body-lg">' + escapeHtml(t('dailyLimit.setDesc')) + '</p>' +
+      '<button type="button" class="btn btn-primary" data-nav="set-daily-limit">' + escapeHtml(t('dailyLimit.setBtn')) + '</button>' +
+    '</div>';
+  }
+  var amount = state.dailyLimit.amount;
+  var pct = amount > 0 ? (spent / amount) * 100 : 0;
+  var status = dailyLimitStatus(pct);
+  var remaining = amount - spent;
+  return '<div class="card target-card daily-limit-card">' +
+    '<div class="target-head">' +
+      '<h2 class="title">' + escapeHtml(t('dailyLimit.title')) + '</h2>' +
+      '<button type="button" class="link-btn" data-nav="set-daily-limit" style="padding:4px;">' + escapeHtml(t('dailyLimit.editBtn')) + '</button>' +
+    '</div>' +
+    '<div class="status-pill ' + status.key + '">' + icon(status.key === 'ok' ? 'checkCircle' : 'warning', '', 15) + escapeHtml(status.label) + '</div>' +
+    '<p class="body-lg">' + t('dailyLimit.spentOf', { spent: '<strong class="tabular">' + fmtMMK(spent) + '</strong>', amount: '<strong class="tabular">' + fmtMMK(amount) + '</strong>' }) + '</p>' +
+    '<div class="progress-track" role="progressbar" aria-valuenow="' + Math.round(clamp(pct,0,100)) + '" aria-valuemin="0" aria-valuemax="100" aria-label="' + escapeHtml(t('dailyLimit.title')) + '">' +
+      '<div class="progress-fill" style="width:' + clamp(pct, 0, 100) + '%; background:var(--' + status.key + ');"></div>' +
+    '</div>' +
+    '<div class="target-grid">' +
+      '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('dailyLimit.remaining')) + '</div><div class="val tabular' + (remaining < 0 ? ' text-danger' : '') + '">' + (remaining >= 0 ? fmtMMK(remaining) : ('-' + fmtMMK(Math.abs(remaining)))) + '</div></div>' +
+      '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('dailyLimit.percentUsed')) + '</div><div class="val tabular' + (pct > 100 ? ' text-danger' : '') + '">' + Math.round(pct) + '%</div></div>' +
+      '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('dailyLimit.day')) + '</div><div class="val">' + escapeHtml(fmtDateHuman(today)) + '</div></div>' +
+      '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('dailyLimit.dailyLimit')) + '</div><div class="val tabular">' + fmtMMK(amount) + '</div></div>' +
+    '</div>' +
+  '</div>';
+}
+
 function renderTargetCard() {
   var mk = currentMonthKey();
   var spent = monthTotalSpent(mk);
@@ -1841,8 +2009,8 @@ function renderTargetCard() {
       '<div class="progress-fill" style="width:' + clamp(pct, 0, 100) + '%; background:var(--' + status.key + ');"></div>' +
     '</div>' +
     '<div class="target-grid">' +
-      '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('target.remaining')) + '</div><div class="val tabular">' + (remaining >= 0 ? fmtMMK(remaining) : t('target.overBy', { amount: fmtMMK(Math.abs(remaining)) })) + '</div></div>' +
-      '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('target.percentUsed')) + '</div><div class="val tabular">' + Math.round(pct) + '%</div></div>' +
+      '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('target.remaining')) + '</div><div class="val tabular' + (remaining < 0 ? ' text-danger' : '') + '">' + (remaining >= 0 ? fmtMMK(remaining) : ('-' + fmtMMK(Math.abs(remaining)))) + '</div></div>' +
+      '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('target.percentUsed')) + '</div><div class="val tabular' + (pct > 100 ? ' text-danger' : '') + '">' + Math.round(pct) + '%</div></div>' +
       '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('target.month')) + '</div><div class="val">' + escapeHtml(monthLabel(mk)) + '</div></div>' +
       '<div class="target-stat"><div class="muted caption">' + escapeHtml(t('target.monthlyTarget')) + '</div><div class="val tabular">' + fmtMMK(amount) + '</div></div>' +
     '</div>' +
@@ -1999,14 +2167,22 @@ function renderRecentExpenseRow(e) {
 
 function renderHomeScreen(root) {
   var hasAny = state.expenses.length > 0;
-  var recent = recentExpenses(5);
+  // "Your Spending" groups every expense by date (see groupByDate below), so
+  // it must be handed the household's whole expense history, not a capped
+  // slice — a 5-item cap silently dropped both older dates entirely and
+  // extra same-day items once the cap was reached mid-group.
+  var recent = recentExpenses(state.expenses.length);
   var body =
+    renderDailyLimitCard() +
     renderTargetCard() +
     (hasAny
       ? ('<div class="stack" id="summary-section">' + renderSummarySection() + '</div>' +
          '<div class="stack">' +
-           '<div class="row-between"><h2 class="title">' + escapeHtml(t('home.recentExpenses')) + '</h2><button type="button" class="link-btn" data-nav="all-expenses" style="padding:4px;">' + escapeHtml(t('home.viewAllExpenses')) + '</button></div>' +
-           '<div class="card" style="padding:6px 12px;">' + recent.map(renderRecentExpenseRow).join('') + '</div>' +
+           '<div class="row-between"><h2 class="title">' + escapeHtml(t('home.yourSpending')) + '</h2><button type="button" class="link-btn" data-nav="all-expenses" style="padding:4px;">' + escapeHtml(t('home.viewAllExpenses')) + '</button></div>' +
+           groupByDate(recent).map(function (g) {
+             return '<div class="day-group-label">' + fmtDateGroup(g.date) + '</div>' +
+               '<div class="card" style="padding:6px 12px;">' + g.items.map(renderRecentExpenseRow).join('') + '</div>';
+           }).join('') +
          '</div>')
       : ('<div class="card empty-state">' +
           '<span class="icon-wrap">' + icon('receipt', '', 30) + '</span>' +
@@ -3177,6 +3353,62 @@ function renderSetTargetScreen(root) {
   });
 }
 
+function renderSetDailyLimitScreen(root) {
+  var today = todayISO();
+  var canEdit = currentMemberIsOwner();
+  var current = state.dailyLimit ? state.dailyLimit.amount : null;
+  var body =
+    '<div class="stack-lg">' +
+      '<p class="body-lg">' + escapeHtml(t('dailyLimit.pageQuestion')) + '</p>' +
+      '<div class="banner info">' + icon('info') + '<span>' + escapeHtml(t('dailyLimit.pageInfo')) + '</span></div>' +
+      '<form id="daily-limit-form" class="card stack-lg" novalidate>' +
+        '<div class="field">' +
+          '<label class="field-label" for="daily-limit-amount">' + escapeHtml(t('dailyLimit.amountLabel')) + '</label>' +
+          '<div class="amount-input-wrap"><span class="currency-tag">MMK</span><input class="text-input" id="daily-limit-amount" type="text" inputmode="decimal" placeholder="0" value="' + (current != null ? String(current) : '') + '" ' + (canEdit ? '' : 'disabled') + ' /></div>' +
+          '<div id="daily-limit-error"></div>' +
+        '</div>' +
+        '<div class="field"><span class="field-label">' + escapeHtml(t('dailyLimit.currencyLabel')) + '</span><div class="readonly-row"><span>' + icon('shield', '', 18) + '</span><span>' + escapeHtml(state.household.currency) + '</span></div></div>' +
+        '<div class="field"><span class="field-label">' + escapeHtml(t('dailyLimit.day')) + '</span><div class="readonly-row"><span>' + icon('calendar', '', 18) + '</span><span>' + escapeHtml(fmtDateHuman(today)) + '</span></div></div>' +
+        (canEdit ? '<button type="submit" class="btn btn-primary btn-block" id="daily-limit-save-btn">' + escapeHtml(t('dailyLimit.saveBtn')) + '</button>' :
+          '<div class="banner info">' + icon('info') + '<span>' + escapeHtml(t('dailyLimit.ownerOnlyInfo')) + '</span></div>') +
+      '</form>' +
+    '</div>';
+  root.innerHTML = renderShell('home', body, { title: t('dailyLimit.pageTitle'), backTo: true, topPad: true });
+  bindShellEvents(root);
+  onScreenBack = function () { navigate('home'); };
+  if (!canEdit) return;
+  var amtInput = root.querySelector('#daily-limit-amount');
+  amtInput.addEventListener('input', function () {
+    var v = amtInput.value.replace(/[^0-9.]/g, '');
+    var firstDot = v.indexOf('.');
+    if (firstDot !== -1) v = v.slice(0, firstDot + 1) + v.slice(firstDot + 1).replace(/\./g, '');
+    amtInput.value = v;
+    root.querySelector('#daily-limit-error').innerHTML = '';
+  });
+  root.querySelector('#daily-limit-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var val = parseFloat(amtInput.value.trim());
+    var errBox = root.querySelector('#daily-limit-error');
+    if (!amtInput.value.trim() || isNaN(val) || val <= 0) {
+      errBox.innerHTML = '<span class="field-error">' + icon('warning') + '<span>' + escapeHtml(t('dailyLimit.err.amount')) + '</span></span>';
+      amtInput.classList.add('has-error');
+      amtInput.focus();
+      return;
+    }
+    var btn = root.querySelector('#daily-limit-save-btn');
+    btn.disabled = true; btn.textContent = t('dailyLimit.saving');
+    apiRequest('PUT', '/daily-limit', { amount: val, date: today }).then(function (result) {
+      state.dailyLimit = result.dailyLimit;
+      navigate('home');
+      showToast(t('toast.dailyLimitUpdated'));
+    }).catch(function () {
+      btn.disabled = false;
+      btn.textContent = t('dailyLimit.saveBtn');
+      errBox.innerHTML = '<span class="field-error">' + icon('warning') + '<span>' + escapeHtml(t('dailyLimit.err.save')) + '</span></span>';
+    });
+  });
+}
+
 
 /* ============================================================
    HOUSEHOLD
@@ -3184,11 +3416,15 @@ function renderSetTargetScreen(root) {
 function renderHouseholdScreen(root) {
   var isOwner = currentMemberIsOwner();
   var mk = currentMonthKey();
+  var today = todayISO();
   var body =
     '<div class="stack-lg">' +
       '<div class="card stack">' +
         '<div class="row-between"><h2 class="title">' + escapeHtml(state.household.name) + '</h2><span class="badge">' + icon('shield', '', 14) + ' ' + escapeHtml(state.household.currency) + '</span></div>' +
         detailRow(t('target.currencyLabel'), escapeHtml(state.household.currency)) +
+        detailRow(t('dailyLimit.dailyLimit'), state.dailyLimit && state.dailyLimit.date === today ? ('<span class="tabular">' + fmtMMK(state.dailyLimit.amount) + '</span>') : escapeHtml(t('household.notSet'))) +
+        '<button type="button" class="link-btn" data-nav="set-daily-limit" style="align-self:flex-start; padding:4px;">' + escapeHtml(t('household.viewOrEditDailyLimit')) + '</button>' +
+        '<hr class="divider" />' +
         detailRow(t('target.monthlyTarget'), state.target && state.target.month === mk ? ('<span class="tabular">' + fmtMMK(state.target.amount) + '</span>') : escapeHtml(t('household.notSet'))) +
         '<button type="button" class="link-btn" data-nav="set-target" style="align-self:flex-start; padding:4px;">' + escapeHtml(t('household.viewOrEditTarget')) + '</button>' +
       '</div>' +
@@ -3786,15 +4022,17 @@ function loadHouseholdData() {
   return Promise.all([
     apiRequest('GET', '/expenses'),
     apiRequest('GET', '/target'),
+    apiRequest('GET', '/daily-limit'),
     apiRequest('GET', '/categories'),
     apiRequest('GET', '/banks'),
     apiRequest('GET', '/wallets')
   ]).then(function (results) {
     state.expenses = results[0].expenses;
     state.target = results[1].target;
-    state.customCategories = results[2].categories;
-    state.customBanks = results[3].banks;
-    state.customWallets = results[4].wallets;
+    state.dailyLimit = results[2].dailyLimit;
+    state.customCategories = results[3].categories;
+    state.customBanks = results[4].banks;
+    state.customWallets = results[5].wallets;
   });
 }
 

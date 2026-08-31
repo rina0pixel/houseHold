@@ -527,6 +527,11 @@ svg { flex-shrink: 0; }
 .status-pill.danger { background: var(--danger-tint); color: var(--danger); }
 .target-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
 .target-stat .val { font-size: 1.05rem; font-weight: 800; }
+.target-stat .val.text-danger { color: var(--danger); }
+
+/* Daily spending limit ranks above the monthly target, so its card gets a
+   brand-colored border to stand out as the higher-priority figure. */
+.daily-limit-card { border: 2px solid var(--brand); }
 
 /* ============================================================
    SEGMENTED CONTROL
@@ -657,6 +662,7 @@ svg { flex-shrink: 0; }
   width: 100%;
 }
 .text-input:focus, .select-input:focus { border-color: var(--brand); }
+.text-input:disabled, .select-input:disabled { background: var(--surface-2); color: var(--text-muted); border-style: dashed; cursor: not-allowed; opacity: 1; -webkit-text-fill-color: var(--text-muted); }
 .text-input.has-error, .select-input.has-error { border-color: var(--danger); }
 .amount-input-wrap { position: relative; display: flex; align-items: center; }
 .amount-input-wrap .currency-tag { position: absolute; left: 16px; font-weight: 800; color: var(--text-muted); pointer-events: none; }
